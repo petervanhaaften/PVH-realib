@@ -1,3 +1,24 @@
+--[[
+
+Euclid Rhythm Generator
+
+Basically this is a cut up version of Ex Machina (by RobU23):
+https://github.com/RobU23/ReaScripts/wiki/MIDI-Ex-Machina
+
+It differs from that script by offering only the ability
+to generate a rhythm at a fixed pitch, without any of the other
+many features presented in Ex Machina. It also includes a new GUI
+for writing rhythms in the MIDI editor.
+
+Eventually it will be possible to load text files which define rhythms at specific
+points in a composition, and have this generator produce those midi items. That's really
+the whole point of this script.
+
+I definitely need to clean up this script. There are still multiple unused elements
+included in this slashed up script.
+
+]]--
+
 
 --------------------------------------------------------------------------------
 -- Ex Machina Setup Code -- variables etc
@@ -8,7 +29,6 @@
 package.path = debug.getinfo(1,"S").source:match[[^@?(.*[\/])[^\/]-$]] .."?.lua;".. package.path
 
 local b = require 'euclid'
---local g = require 'euclid2-exported_GUI'
 
 --------------------------------------------------------------------------------
 -- GLOBAL VARIABLES START
@@ -40,23 +60,6 @@ m.dupes = {} -- for duplicate note detection while randomising
 m.euclid = {} -- for pattern generation
 
 m.notes = {'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B', 'C'}
-m.scales = {
-	{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, name = "Chromatic"},
-	{0, 2, 4, 5, 7, 9, 11, 12, name = "Ionian / Major"},
-	{0, 2, 3, 5, 6, 9, 10, 12, name = "Dorian"},
-	{0, 1, 3, 5, 7, 8, 10, 12, name = "Phrygian"},
-	{0, 2, 4, 6, 7, 9, 11, 12, name = "Lyndian"},
-	{0, 2, 4, 5, 7, 9, 10, 12, name = "Mixolydian"},
-	{0, 2, 3, 5, 7, 8, 10, 12, name = "Aeolian / Minor"},
-	{0, 1, 3, 5, 6, 8, 10, 12, name = "Locrian"},
-	{0, 3, 5, 6, 7, 10, 12,name = "Blues"},
-	{0, 2, 4, 7, 9, 12,name = "Pentatonic Major"},
-	{0, 3, 5, 7, 10, 12,name = "Pentatonic Minor"},
-	{name = "Permute"}
-}
--- a list of scales available to the note randomiser, more can be added manually if required
--- each value is the interval step from the root note of the scale (0) including the octave (12)
-
 
 m.seqShift = 0; m.seqShiftMin = -16; m.seqShiftMax = 16 -- shift notes left-right from sequencer
 
@@ -598,7 +601,7 @@ if missing_lib then return 0 end
 
 
 GUI.name = "pvh.euclid"
-GUI.x, GUI.y, GUI.w, GUI.h = 0, 0, 150, 165
+GUI.x, GUI.y, GUI.w, GUI.h = 0, 0, 150, 197
 GUI.anchor, GUI.corner = "mouse", "C"
 
 function test()
@@ -607,7 +610,7 @@ function test()
 GUI.New("make", "Button", {
     z = 11,
     x = 64.0,
-    y = 112.0,
+    y = 144.0,
     w = 48,
     h = 24,
     caption = "make",
@@ -668,6 +671,24 @@ GUI.New("Rotation", "Textbox", {
     undo_limit = 20
 })
 
+
+GUI.New("Pitch", "Textbox", {
+    z = 11,
+    x = 64,
+    y = 112,
+    w = 40,
+    h = 20,
+    caption = "Pitch",
+    cap_pos = "left",
+    font_a = 3,
+    font_b = "monospace",
+    color = "txt",
+    bg = "wnd_bg",
+    shadow = true,
+    pad = 4,
+    undo_limit = 20
+})
+
 GUI.Init()
 GUI.func = MainLoop()
 GUI.freq = 0
@@ -676,5 +697,6 @@ GUI.Main()
 GUI.Val("Steps","0")
 GUI.Val("Pulses","0")
 GUI.Val("Rotation","0")
+GUI.Val("Pitch","60")
 ----
 --MainLoop()

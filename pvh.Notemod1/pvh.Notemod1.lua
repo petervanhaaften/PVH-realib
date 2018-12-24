@@ -21,8 +21,8 @@ window = reaper.MIDIEditor_GetActive()
 -- Get current take being edited in MIDI Editor
 take = reaper.MIDIEditor_GetTake(window)
 
--- Loop through each selected note
-retval, notes, ccs, sysex = reaper.MIDI_CountEvts(take) -- count all notes(events)
+-- Loop through & count each selected note
+retval, notes, ccs, sysex = reaper.MIDI_CountEvts(take
 i = 0
 check = 0
 notes_selected=0

@@ -179,6 +179,7 @@ function InsertNotes()
 		local noteShift = m.seqShift * gridSize
 		local t1 = GetNoteBuf()	
 		local t2 = {} -- for note shifting
+		local pitch = GUI.Val("Pitch")
 		CopyTable(t1, t2)
 		for k, v in pairs(t2) do -- do note shifting
 			v[3] = v[3] + noteShift
@@ -193,7 +194,7 @@ function InsertNotes()
 			end
 		end
 		while t2[i] do
-			reaper.MIDI_InsertNote(m.activeTake, t2[i][1], t2[i][2], t2[i][3], t2[i][4], t2[i][6], t2[i][7], t2[i][8], false)
+			reaper.MIDI_InsertNote(m.activeTake, t2[i][1], t2[i][2], t2[i][3], t2[i][4], t2[i][6], pitch, t2[i][8], false)
 			--1=selected, 2=muted, 3=startppq, 4=endppq, 5=len, 6=chan, 7=pitch, 8=vel, noSort)		
 			i = i + 1
 		end -- while t2[i]

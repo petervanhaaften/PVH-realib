@@ -146,16 +146,17 @@ function johnsonBuffer()
       p.johnsonseq[j] = {}
    end
    --predefine sequences
-   p.johnsonseq[0] = "100"
-   p.johnsonseq[1] = "011"
+   p.johnsonseq[0] = "1"
+   p.johnsonseq[1] = "0"
    --values from GUI or input text file
-   p.johnsonseq_new[0] = "11"
-   p.johnsonseq_new[1] = "010"
+   p.johnsonseq_new[0] = "33"
+   p.johnsonseq_new[1] = "22"
    for j=0, 1 do
       for k=0,1 do
 	 p.johnsonseq[j] = string.gsub(p.johnsonseq[j], k, p.johnsonseq_new[j])
       end
-      Msg(p.johnsonseq[j])
+      --Msg(p.johnsonseq[j])
+      Msg("blaaaah")
    end
    for i=0, notes-1 do --loops through all notes in take
       --local random = low + math.random(randomMax) --pitch for note
@@ -167,14 +168,14 @@ function johnsonBuffer()
       end
       i=i+1
    end
-   --Msg(p.johnsonbuf)
 end
 
 function makeButton()
    --when gui 'make' button is pressed. . . 
-   getselectedNotes()
-   makenoteBuffer()
-   compareBuffers()
+   --getselectedNotes()
+   --makenoteBuffer()
+   --compareBuffers()
+   --johnsonBuffer()
 end
 
 -------------------------------
@@ -259,7 +260,6 @@ GUI.Val("High","80")
 -- MAIN
 -------------------------------
 
-getselectedNotes()
-makenoteBuffer()
-compareBuffers()
- johnsonBuffer()
+--getselectedNotes()
+--makenoteBuffer()
+--compareBuffers()

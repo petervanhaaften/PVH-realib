@@ -147,7 +147,10 @@ function johnsonBuffer()
       p.johnsonseq[j] = {}
    end
    --read gui values
-   p.johnsonseq_origin = GUI.Val("origin")
+   --only check guival for origin on first run
+   if p.origin_touch == 0 then
+      p.johnsonseq_origin = GUI.Val("origin")
+   else end
    p.johnsonseq_new[0] = GUI.Val("seq0")
    p.johnsonseq_new[1] = GUI.Val("seq1")
    p.johnsonseq_new[2] = GUI.Val("seq2")
@@ -182,12 +185,22 @@ function johnsonBuffer()
    Msg("numnotes : " .. notes)
    p.johnsonseq_origin_final_length = string.len(p.johnsonseq_origin_final)
    Msg("length of origin : " .. p.johnsonseq_origin_final_length)
+
+   --add take "name" (label) of number of notes
+   local newname = notes .. "notes" --new label string
+   local item  = reaper.GetSelectedMediaItem(0, 0)
+   local take = reaper.GetActiveTake(item)
+   reaper.ULT_SetMediaItemNote(item, name)
+   retval, stringNeedBig = reaper.GetSetMediaItemTakeInfo_String(take, "P_NAME", newname, 1)
+
    --if final origin length is less than number of selected notes, run process again, else end.
    if p.johnsonseq_origin_final_length < notes then
       --move final transformed origin into original origin, for further processing
-      --!!!need to find a way to not pull from GUI the origin in this case !!!
       p.johnsonseq_origin = p.johnsonseq_origin_final
-      --johnsonBuffer()
+      --reprocess, until origin_final has same or more num of elements as selected notes
+      p.origin_touch = 1 --don't let GUI touch origin variable !
+      --allow start position change (start on nth element in p.johnsonseq_origin_final
+      johnsonBuffer()
    else end
 end
 
@@ -196,6 +209,7 @@ function makeButton()
    getselectedNotes()
    --makenoteBuffer()
    --compareBuffers()
+   p.origin_touch = 0
    johnsonBuffer()
 end
 

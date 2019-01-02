@@ -429,6 +429,13 @@ function GenBjorklund(pulses, steps, rotation, accProbTable, accSlider)
 	end
 	PurgeNoteBuf()
 	InsertNotes()
+	
+	--add take "name" (label) of number of notes
+	local newname = pulse .. "pul " .. step .. "stp " .. rot .. "rot " --new label string
+	local item  = reaper.GetSelectedMediaItem(0, 0)
+	local take = reaper.GetActiveTake(item)
+	reaper.ULT_SetMediaItemNote(item, name)
+	retval, stringNeedBig = reaper.GetSetMediaItemTakeInfo_String(take, "P_NAME", newname, 1)
 end
 --------------------------------------------------------------------------------
 -- Euclidiser

@@ -44,7 +44,6 @@ function makenoteBuffer()
 	 p.newnotes[i] = (60 + math.random(10)) --fill table with random pitch at each note index
 	 p.origstartppq[i] = startppq --fill table with startppq values at each note index
 	 p.origendppq[i] = endppq --fill table wiuth endppq values at each note index
-	 Msg(random .. 'random')
       end
       i=i+1
    end

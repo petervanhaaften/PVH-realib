@@ -3,13 +3,9 @@ function Msg(param)
 end
 
 function Main()
-  --textfile layout:
-  --//tempo, beats, beats per bar, time sig marking position (in seconds)
-  --//intend to add "glide to next tempo" time value ? 
-  --//(ie, last 3 seconds, glide to next tempo)
+  cursor_pos = reaper.GetCursorPosition()
 
-  retval, filenameName = reaper.GetUserFileNameForRead("", "Open", ".txt") 
-  file = assert(io.open(filenameName, r))
+  file = assert(io.open("/Users/pvh/src/Reaper_scripts/PVH-realib/pvh.Read_Meter/test_times.txt", r))
   array = {}
   i = 0
   
@@ -18,12 +14,11 @@ function Main()
     val0 = 0
     val1 = 0
     val2 = 0
-    val3 = 0
     wnum = 0
     -- inner loop seperates each element on each line 
     for w in line:gmatch("%S+") do     
-      -- there are 3 elements, copy them into val0, val1, val2, or val3 respectfully
-      if wnum < 4 then
+      -- there are 3 elements, copy them into val0, val1, or val2 respectfully
+      if wnum < 3 then
         if wnum == 0 then
           val0 = w
         end
@@ -33,23 +28,19 @@ function Main()
         if wnum == 2 then
           val2 = w
         end
-	if wnum == 3 then
-	  val3 = w
-	end
         wnum = wnum + 1        
       end
 
     end
 
     --creates a timesigmarker for every line read
-    reaper.AddTempoTimeSigMarker(0, val3, val0, val1, val2,false)
+    reaper.AddTempoTimeSigMarker(0, val2, 100, val0, val1,true)
 
     array[i]=line
     i=i+1
-
   end
-
+  
 end
 
 Main()
---reaper.ShowConsoleMsg("complete!")
+reaper.ShowConsoleMsg("complete!")

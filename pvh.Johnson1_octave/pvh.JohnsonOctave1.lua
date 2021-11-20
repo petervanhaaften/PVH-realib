@@ -176,7 +176,7 @@ function builtPitchTable()
 	p.pitch[2] = tonumber(octave2)
 	p.pitch[3] = tonumber(octave3)
 	p.pitch[4] = tonumber(octave4)
-	p.pitch[5] = tonumber(octave)
+	p.pitch[5] = tonumber(octave5)
 	p.pitch[6] = tonumber(octave6)
 	p.pitch[7] = tonumber(octave7)
 end

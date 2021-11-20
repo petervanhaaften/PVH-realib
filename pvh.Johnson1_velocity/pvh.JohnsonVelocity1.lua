@@ -75,7 +75,7 @@ p.johnsonseq_new = {}
 p.johnsonseq_iterated = {}
 
 p.pitch = {}
-p.pitchTable = {}
+p.velocityTable = {}
 
 --will hold data from text file values
 p.refdat = {}
@@ -125,16 +125,17 @@ function makenoteBuffer()
    -- only run this process if transformed origin is long enough to fill in all note pitches
    for i=0, notes-1 do --loops through all notes in take
       -- git pitchNew
-      octaveNew = p.johnsonseq_iterated[i+1] 
+      local velocityNew = p.johnsonseq_iterated[i+1]
+      --Msg("johynsoniterated velocty : " .. p.johnsonseq_iterated[i+1]) 
       --fill variables with data from each note
       local retval, sel, muted, startppq, endppq, chan, pitch, vel = reaper.MIDI_GetNote(take, i) 
       if sel == true then -- find which notes are selected
       p.origstartppq[i] = startppq --fill table with startppq values at each note index
       p.origendppq[i] = endppq --fill table wiuth endppq values at each note index
       --create new pitch with resulted of transformed octave
-      p.pitchTable[i] = pitch + (octaveSize * octaveNew)
+      p.velocityTable[i] = velocityNew
       --reaper.MIDI_InsertNote(take, sel, muted, p.origstartppq[i], p.origendppq[i], chan, pitchNew, vel, false)
-      reaper.MIDI_InsertNote(take, sel, muted, p.origstartppq[i], p.origendppq[i], chan, p.pitchTable[i], vel, false)   
+      reaper.MIDI_InsertNote(take, sel, muted, p.origstartppq[i], p.origendppq[i], chan, pitch, p.velocityTable[i], false)   
       end
       --delete eacg original pitch
       reaper.MIDI_DeleteNote(take, i) 
@@ -143,7 +144,7 @@ function makenoteBuffer()
    --print note with all transformations
    local item = reaper.GetSelectedMediaItem(0, 0) -- Get selected item 0
    local currentNotes = reaper.ULT_GetMediaItemNote(item)
-	reaper.ULT_SetMediaItemNote(item, currentNotes .. '\n OCTAVE PROCESS \n ~~~~~~~~~~~~~ \n origin : ' .. origin .. '\n seq0 : ' .. seq0 .. '\n seq1 : ' .. seq1 .. '\n seq2 : ' .. seq2 .. '\n seq3 : ' .. seq3 .. '\n seq4 : ' .. seq4 .. '\n seq5 : ' .. seq5 .. '\n seq6 : ' .. seq6 .. '\n seq7 : ' .. seq7 ..  '\n final transformed sequence : ' .. dump(p.johnsonseq_origin_final))
+	reaper.ULT_SetMediaItemNote(item, currentNotes .. '\n VELOCITY PROCESS \n ~~~~~~~~~~~~~ \n origin : ' .. origin .. '\n seq0 : ' .. seq0 .. '\n seq1 : ' .. seq1 .. '\n seq2 : ' .. seq2 .. '\n seq3 : ' .. seq3 .. '\n seq4 : ' .. seq4 .. '\n seq5 : ' .. seq5 .. '\n seq6 : ' .. seq6 .. '\n seq7 : ' .. seq7 ..  '\n final transformed sequence : ' .. dump(p.johnsonseq_origin_final))
 end
 
 function getselectedNotes()
@@ -171,14 +172,14 @@ function compareBuffers()
 end
 
 function builtPitchTable()
-	p.pitch[0] = tonumber(octave0)
-	p.pitch[1] = tonumber(octave1)
-	p.pitch[2] = tonumber(octave2)
-	p.pitch[3] = tonumber(octave3)
-	p.pitch[4] = tonumber(octave4)
-	p.pitch[5] = tonumber(octave)
-	p.pitch[6] = tonumber(octave6)
-	p.pitch[7] = tonumber(octave7)
+	p.pitch[0] = tonumber(velocity0)
+	p.pitch[1] = tonumber(velocity1)
+	p.pitch[2] = tonumber(velocity2)
+	p.pitch[3] = tonumber(velocity3)
+	p.pitch[4] = tonumber(velocity4)
+	p.pitch[5] = tonumber(velocity5)
+	p.pitch[6] = tonumber(velocity6)
+	p.pitch[7] = tonumber(velocity7)
 end
 
 function johnsonBuffer()
@@ -265,10 +266,10 @@ end
 -- GUI
 -------------------------------
 
-local ctx = reaper.ImGui_CreateContext('pvh.johnson1_octave')
+local ctx = reaper.ImGui_CreateContext('pvh.johnson1_velocity')
 
 function loop()
-   local visible, open = reaper.ImGui_Begin(ctx, 'pvh.johnson1_octave', true)
+   local visible, open = reaper.ImGui_Begin(ctx, 'pvh.johnson1_velocity', true)
    if visible then
    --set window dimensions
       reaper.ImGui_SetWindowSize(ctx, 320, 290, nil)
@@ -285,49 +286,49 @@ function loop()
          reaper.ImGui_TableSetColumnIndex(ctx, 0)
          retval, seq0 = reaper.ImGui_InputText(ctx, "seq0", seq0, nil)
          reaper.ImGui_TableSetColumnIndex(ctx, 1)
-         retval, octave0 = reaper.ImGui_InputText(ctx, "octave0", octave0, nil)
+         retval, velocity0 = reaper.ImGui_InputText(ctx, "velocity0", velocity0, nil)
          
          reaper.ImGui_TableNextRow(ctx)
          reaper.ImGui_TableSetColumnIndex(ctx, 0)
          retval, seq1 = reaper.ImGui_InputText(ctx, "seq1", seq1, nil)
          reaper.ImGui_TableSetColumnIndex(ctx, 1)
-         retval, octave1 = reaper.ImGui_InputText(ctx, "octave1", octave1, nil)
+         retval, velocity1 = reaper.ImGui_InputText(ctx, "velocity1", velocity1, nil)
          
          reaper.ImGui_TableNextRow(ctx)
          reaper.ImGui_TableSetColumnIndex(ctx, 0)
          retval, seq2 = reaper.ImGui_InputText(ctx, "seq2", seq2, nil)
          reaper.ImGui_TableSetColumnIndex(ctx, 1)
-         retval, octave2 = reaper.ImGui_InputText(ctx, "octave2", octave2, nil)
+         retval, velocity2 = reaper.ImGui_InputText(ctx, "velocity2", velocity2, nil)
          
          reaper.ImGui_TableNextRow(ctx)
          reaper.ImGui_TableSetColumnIndex(ctx, 0)
          retval, seq3 = reaper.ImGui_InputText(ctx, "seq3", seq3, nil)
          reaper.ImGui_TableSetColumnIndex(ctx, 1)
-         retval, octave3 = reaper.ImGui_InputText(ctx, "octave3", octave3, nil)
+         retval, velocity3 = reaper.ImGui_InputText(ctx, "velocity3", velocity3, nil)
          
          reaper.ImGui_TableNextRow(ctx)
          reaper.ImGui_TableSetColumnIndex(ctx, 0)
          retval, seq4 = reaper.ImGui_InputText(ctx, "seq4", seq4, nil)
          reaper.ImGui_TableSetColumnIndex(ctx, 1)
-         retval, octave4 = reaper.ImGui_InputText(ctx, "octave4", octave4, nil)
+         retval, velocity4 = reaper.ImGui_InputText(ctx, "velocity4", velocity4, nil)
          
          reaper.ImGui_TableNextRow(ctx)
          reaper.ImGui_TableSetColumnIndex(ctx, 0)
          retval, seq5 = reaper.ImGui_InputText(ctx, "seq5", seq5, nil)
          reaper.ImGui_TableSetColumnIndex(ctx, 1)
-         retval, octave5 = reaper.ImGui_InputText(ctx, "octave5", octave5, nil)
+         retval, velocity5 = reaper.ImGui_InputText(ctx, "velocity5", velocity5, nil)
          
          reaper.ImGui_TableNextRow(ctx)
          reaper.ImGui_TableSetColumnIndex(ctx, 0)
          retval, seq6 = reaper.ImGui_InputText(ctx, "seq6", seq6, nil)
          reaper.ImGui_TableSetColumnIndex(ctx, 1)
-         retval, octave6 = reaper.ImGui_InputText(ctx, "octave6", octave6, nil)
+         retval, velocity6 = reaper.ImGui_InputText(ctx, "velocity6", velocity6, nil)
          
          reaper.ImGui_TableNextRow(ctx)
          reaper.ImGui_TableSetColumnIndex(ctx, 0)
          retval, seq7 = reaper.ImGui_InputText(ctx, "seq7", seq7, nil)
          reaper.ImGui_TableSetColumnIndex(ctx, 1)
-         retval, octave7 = reaper.ImGui_InputText(ctx, "octave7", octave7, nil)
+         retval, velocity7 = reaper.ImGui_InputText(ctx, "velocity7", velocity7, nil)
       reaper.ImGui_EndTable(ctx)
       end
 --[[
@@ -450,14 +451,14 @@ seq5 = "0"
 seq6 = "0"
 seq7 = "0"
 seq8 = "0"
-octave0 = "0"
-octave1 = "1"
-octave2 = "2"
-octave3 = "3"
-octave4 = "4"
-octave5 = "5"
-octave6 = "6"
-octave7 = "7"
+velocity0 = "127"
+velocity1 = "100"
+velocity2 = "75"
+velocity3 = "50"
+velocity4 = "25"
+velocity5 = "10"
+velocity6 = "5"
+velocity7 = "0"
 --pitchBase = 0
 --octaveBase = 3
 octaveSize = 12

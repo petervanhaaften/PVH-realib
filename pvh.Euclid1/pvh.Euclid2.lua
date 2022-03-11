@@ -10,10 +10,6 @@ to generate a rhythm at a fixed pitch, without any of the other
 many features presented in Ex Machina. It also includes a new GUI
 for writing rhythms in the MIDI editor.
 
-Eventually it will be possible to load text files which define rhythms at specific
-points in a composition, and have this generator produce those midi items. That's really
-the whole point of this script.
-
 I definitely need to clean up this script. There are still multiple unused elements
 included in this slashed up script.
 
@@ -599,7 +595,7 @@ function frame()
   rv, pulse = reaper.ImGui_InputInt(ctx, 'pulse', pulse)
   rv, step = reaper.ImGui_InputInt(ctx, 'step', step)
   rv, rot = reaper.ImGui_InputInt(ctx, 'rotation', rot)
-  rv, pitch = reaper.ImGui_InputInt(ctx, 'rotation', pitch)
+  rv, pitch = reaper.ImGui_InputInt(ctx, 'pitch', pitch)
   if reaper.ImGui_Button(ctx, 'make rhythm') then
     Euclidiser()
   end

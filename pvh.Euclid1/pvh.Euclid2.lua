@@ -436,6 +436,7 @@ function GenBjorklund(pulses, steps, rotation, accProbTable, accSlider)
   local newname = pulse .. "pul " .. step .. "stp " .. rot .. "rot " --new label string
   local item  = reaper.GetSelectedMediaItem(0, 0)
   local take = reaper.GetActiveTake(item)
+  --reaper.ULT_SetMediaItemNote(item, name)
   retval, stringNeedBig = reaper.GetSetMediaItemTakeInfo_String(take, "P_NAME", newname, 1)
 end
 --------------------------------------------------------------------------------
@@ -628,7 +629,7 @@ reaper.defer(loop)
 --
 -- LAUNCH STATE
 --
-pulse = "2"
-step = "5"
+pulse = "1"
+step = "4"
 rot = "0"
 pitch = "0"

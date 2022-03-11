@@ -363,20 +363,45 @@ function loop()
       --reaper.ImGui_SetCursorPos(ctx, (w / 2) - 100, 306)
       --reaper.ImGui_SetCursorPos(ctx, (w / 2) - 100, 320)
       reaper.ImGui_PushItemWidth(ctx, 100)
-      local items = "Init\31Major\31Minor\31Lydian\31"
+      local items = "Init\31Major\31Phrygian Major\31Locrian Major\31Natural Minor\31Harmonic Minor\31Dorian\31Mixolydian\31Phrygian\31Lydian\31Locrian\31Gypsy\31Wholetone\31Ahava Raba\31Major Pentatonic\31Minor Pentatonic\31"
+  
       retval, current_item = reaper.ImGui_Combo(ctx, label, current_item, items, -1)
       --menu logic
       --has_talked = false
       has_talked = reaper.ImGui_IsItemEdited(ctx)
       if has_talked == true then
          if current_item == 0 then
-            presetInit()
+            init()
          elseif current_item == 1 then
-            presetMajor()
+            major()
          elseif current_item == 2 then
-            presetMinor()
+            phrygianMajor()
          elseif current_item == 3 then
-            presetLydian()
+            locrianMajor()
+         elseif current_item == 4 then
+            naturalMinor()
+         elseif current_item == 5 then
+            harmonicMinor()
+         elseif current_item == 6 then
+            dorian()
+         elseif current_item == 7 then
+            mixolydian()
+         elseif current_item == 8 then
+            phrygian()
+         elseif current_item == 9 then
+            lydian()
+         elseif current_item == 10 then
+            locrian()
+         elseif current_item == 11 then
+            gypsy()
+         elseif current_item == 12 then
+            wholetone()
+         elseif current_item == 13 then
+            ahavaRaba()
+         elseif current_item == 14 then
+            majorPentatonic()
+         elseif current_item == 15 then
+            minorPentatonic()
          end
       end
 
@@ -480,7 +505,7 @@ octaveSize = 12
 -- Init
 --
 
-function presetInit()
+function init()
    pitch0 = "0"
    pitch1 = "0"
    pitch2 = "0"
@@ -493,7 +518,31 @@ end
 --
 -- Major
 --
-function presetMajor()
+
+--[[
+init()
+major()
+phrygianMajor()
+locrianMajor()
+naturalMinor()
+harmonicMinor()
+dorian()
+mixolydian()
+phrygian()
+lydian()
+locrian()
+gypsy()
+wholetone()
+ahavaRaba()
+majorPentatonic()
+minorPentatonic()
+]]--
+
+--
+-- rest
+--
+function major()
+   -- 0 2 4 5 7 9 11 12 major;
    pitch0 = "0"
    pitch1 = "2"
    pitch2 = "4"
@@ -504,7 +553,32 @@ function presetMajor()
    pitch7 = "12"
 end
 
-function presetMinor()
+function phrygianMajor()
+   --0 1 4 5 7 8 10 12 phrygian major;
+   pitch0 = "0"
+   pitch1 = "1"
+   pitch2 = "4"
+   pitch3 = "5"
+   pitch4 = "7"
+   pitch5 = "8"
+   pitch6 = "10"
+   pitch7 = "12"
+end
+
+function locrianMajor()
+   --0 2 4 5 6 8 10 12 locrian major;
+   pitch0 = "0"
+   pitch1 = "2"
+   pitch2 = "4"
+   pitch3 = "5"
+   pitch4 = "6"
+   pitch5 = "8"
+   pitch6 = "10"
+   pitch7 = "12"
+end
+
+function naturalMinor()
+   --0 2 3 5 7 8 10 12 natural minor;
    pitch0 = "0"
    pitch1 = "2"
    pitch2 = "3"
@@ -515,7 +589,56 @@ function presetMinor()
    pitch7 = "12"
 end
 
-function presetLydian()
+function harmonicMinor()
+   -- 0 2 4 5 8 9 11 12 harmonic major;
+   pitch0 = "0"
+   pitch1 = "2"
+   pitch2 = "4"
+   pitch3 = "5"
+   pitch4 = "8"
+   pitch5 = "9"
+   pitch6 = "11"
+   pitch7 = "12"
+end
+
+function dorian()
+   --0 2 3 5 7 9 10 12 dorian mode;
+   pitch0 = "0"
+   pitch1 = "2"
+   pitch2 = "3"
+   pitch3 = "5"
+   pitch4 = "7"
+   pitch5 = "9"
+   pitch6 = "10"
+   pitch7 = "12"
+end
+
+function mixolydian()
+   --0 2 4 5 7 9 10 12 mixolydian;
+   pitch0 = "0"
+   pitch1 = "2"
+   pitch2 = "4"
+   pitch3 = "5"
+   pitch4 = "7"
+   pitch5 = "9"
+   pitch6 = "10"
+   pitch7 = "12"
+end
+
+function phrygian()
+   --0 1 3 5 7 8 10 12 phrygian;
+   pitch0 = "0"
+   pitch1 = "1"
+   pitch2 = "3"
+   pitch3 = "5"
+   pitch4 = "7"
+   pitch5 = "8"
+   pitch6 = "10"
+   pitch7 = "12"
+end
+
+function lydian()
+   --0 2 4 6 7 9 11 12 lydian; 
    pitch0 = "0"
    pitch1 = "2"
    pitch2 = "4"
@@ -524,4 +647,76 @@ function presetLydian()
    pitch5 = "9"
    pitch6 = "11"
    pitch7 = "13"
+end
+
+function locrian()
+   --0 1 3 5 6 8 10 12 locrian;
+   pitch0 = "0"
+   pitch1 = "1"
+   pitch2 = "3"
+   pitch3 = "5"
+   pitch4 = "6"
+   pitch5 = "8"
+   pitch6 = "10"
+   pitch7 = "12"
+end
+
+function gypsy()
+   --0 1 4 5 7 8 11 12 gypsy;
+   pitch0 = "0"
+   pitch1 = "1"
+   pitch2 = "4"
+   pitch3 = "5"
+   pitch4 = "7"
+   pitch5 = "8"
+   pitch6 = "11"
+   pitch7 = "12"
+end
+
+function wholetone()
+   --0 2 4 6 8 10 12 whole tone;
+   pitch0 = "0"
+   pitch1 = "2"
+   pitch2 = "4"
+   pitch3 = "6"
+   pitch4 = "8"
+   pitch5 = "10"
+   pitch6 = "12"
+   pitch7 = "0"
+end
+
+function ahavaRaba()
+   --0 1 4 5 7 8 9 11 ahava raba;
+   pitch0 = "0"
+   pitch1 = "1"
+   pitch2 = "4"
+   pitch3 = "5"
+   pitch4 = "7"
+   pitch5 = "8"
+   pitch6 = "9"
+   pitch7 = "11"
+end
+
+function majorPentatonic()
+   --0 2 4 7 8 major pentatonic;
+   pitch0 = "0"
+   pitch1 = "2"
+   pitch2 = "4"
+   pitch3 = "7"
+   pitch4 = "8"
+   pitch5 = "0"
+   pitch6 = "0"
+   pitch7 = "0"
+end
+
+function minorPentatonic()
+   --0 3 5 7 10 minor pentatonic;
+   pitch0 = "0"
+   pitch1 = "3"
+   pitch2 = "5"
+   pitch3 = "7"
+   pitch4 = "10"
+   pitch5 = "0"
+   pitch6 = "0"
+   pitch7 = "0"
 end

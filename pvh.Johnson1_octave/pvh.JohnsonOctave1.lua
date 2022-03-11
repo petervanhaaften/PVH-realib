@@ -440,9 +440,9 @@ reaper.defer(loop)
 --
 -- LAUNCH STATE
 --
-origin = "10010"
-seq0 = "10011"
-seq1 = "0110"
+origin = "0"
+seq0 = "0"
+seq1 = "0"
 seq2 = "0"
 seq3 = "0"
 seq4 = "0"
@@ -461,52 +461,3 @@ octave7 = "7"
 --pitchBase = 0
 --octaveBase = 3
 octaveSize = 12
---
--- Init
---
-
-function presetInit()
-   pitch0 = "0"
-   pitch1 = "0"
-   pitch2 = "0"
-   pitch3 = "0"
-   pitch4 = "0"
-   pitch5 = "0"
-   pitch6 = "0"
-   pitch7 = "0"
-end
---
--- Major
---
-function presetMajor()
-   pitch0 = "0"
-   pitch1 = "2"
-   pitch2 = "4"
-   pitch3 = "5"
-   pitch4 = "7"
-   pitch5 = "9"
-   pitch6 = "11"
-   pitch7 = "12"
-end
-
-function presetMinor()
-   pitch0 = "0"
-   pitch1 = "2"
-   pitch2 = "3"
-   pitch3 = "5"
-   pitch4 = "7"
-   pitch5 = "8"
-   pitch6 = "10"
-   pitch7 = "12"
-end
-
-function presetLydian()
-   pitch0 = "0"
-   pitch1 = "2"
-   pitch2 = "4"
-   pitch3 = "6"
-   pitch4 = "7"
-   pitch5 = "9"
-   pitch6 = "11"
-   pitch7 = "13"
-end

@@ -593,12 +593,13 @@ click_count, text = 0, 'The quick brown fox jumps over the lazy dog'
 
 function frame()
 
-  reaper.ImGui_SetWindowSize(ctx, 165, 120, nil)
+  reaper.ImGui_SetWindowSize(ctx, 165, 140, nil)
   local rv
   --  rv,widgets.basic.i0 = r.ImGui_InputInt(ctx, 'input int', widgets.basic.i0)
   rv, pulse = reaper.ImGui_InputInt(ctx, 'pulse', pulse)
   rv, step = reaper.ImGui_InputInt(ctx, 'step', step)
   rv, rot = reaper.ImGui_InputInt(ctx, 'rotation', rot)
+  rv, pitch = reaper.ImGui_InputInt(ctx, 'rotation', pitch)
   if reaper.ImGui_Button(ctx, 'make rhythm') then
     Euclidiser()
   end
@@ -632,4 +633,4 @@ reaper.defer(loop)
 pulse = "1"
 step = "4"
 rot = "0"
-pitch = "0"
+pitch = "36"

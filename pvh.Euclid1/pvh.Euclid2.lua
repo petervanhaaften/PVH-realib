@@ -429,7 +429,7 @@ function GenBjorklund(pulses, steps, rotation, accProbTable, accSlider)
   InsertNotes()
   
   --add take "name" (label) of number of notes
-  local newname = pulse .. "pul " .. step .. "stp " .. rot .. "rot " --new label string
+  local newname = pulse .. "pul " .. step .. "stp " .. rot .. "rot " .. m.reaGrid .. "reaGrid "  --new label string
   local item  = reaper.GetSelectedMediaItem(0, 0)
   local take = reaper.GetActiveTake(item)
   --reaper.ULT_SetMediaItemNote(item, name)

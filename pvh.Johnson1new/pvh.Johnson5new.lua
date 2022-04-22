@@ -81,6 +81,7 @@ p.refdat = {}
 
 --global variable holds menu item preset selection
 current_item = 0
+current_scale = ''
 --global boolean to hold gui preset menu switcher logic ctl
 has_talked = true
 --global variable to check length of global computed result
@@ -144,7 +145,7 @@ function makenoteBuffer()
       --print note with all transformations
       local item = reaper.GetSelectedMediaItem(0, 0) -- Get selected item 0
       local currentNotes = reaper.ULT_GetMediaItemNote(item)
-      reaper.ULT_SetMediaItemNote(item, '\n PITCH PROCESS \n ~~~~~~~~~~~~~ \n origin : ' .. origin .. '\n seq0 : ' .. seq0 .. '\n seq1 : ' .. seq1 .. '\n seq2 : ' .. seq2 .. '\n seq3 : ' .. seq3 .. '\n seq4 : ' .. seq4 .. '\n seq5 : ' .. seq5 .. '\n seq6 : ' .. seq6 .. '\n seq7 : ' .. seq7 ..  '\n final transformed sequence : ' .. dump(p.johnsonseq_origin_final))
+      reaper.ULT_SetMediaItemNote(item, '\n PITCH PROCESS \n ~~~~~~~~~~~~~ \n scale : ' .. current_scale .. '\n origin : ' .. origin .. '\n seq0 : ' .. seq0 .. '\n seq1 : ' .. seq1 .. '\n seq2 : ' .. seq2 .. '\n seq3 : ' .. seq3 .. '\n seq4 : ' .. seq4 .. '\n seq5 : ' .. seq5 .. '\n seq6 : ' .. seq6 .. '\n seq7 : ' .. seq7 ..  '\n final transformed sequence : ' .. dump(p.johnsonseq_origin_final))
 end
 
 function getselectedNotes()
@@ -363,8 +364,11 @@ function loop()
       --reaper.ImGui_SetCursorPos(ctx, (w / 2) - 100, 306)
       --reaper.ImGui_SetCursorPos(ctx, (w / 2) - 100, 320)
       reaper.ImGui_PushItemWidth(ctx, 100)
+      -- set menu item names
       local items = "Init\31Major\31Phrygian Major\31Locrian Major\31Natural Minor\31Harmonic Minor\31Dorian\31Mixolydian\31Phrygian\31Lydian\31Locrian\31Gypsy\31Wholetone\31Ahava Raba\31Major Pentatonic\31Minor Pentatonic\31"
-  
+      -- need to create a label name or else ImGUI crashes
+      local label = "##mymenu"
+
       retval, current_item = reaper.ImGui_Combo(ctx, label, current_item, items, -1)
       --menu logic
       --has_talked = false
@@ -372,36 +376,52 @@ function loop()
       if has_talked == true then
          if current_item == 0 then
             init()
+            current_scale = 'init'
          elseif current_item == 1 then
             major()
+            current_scale = 'major'
          elseif current_item == 2 then
             phrygianMajor()
+            current_scale = 'phrygianMajor'
          elseif current_item == 3 then
             locrianMajor()
+            current_scale = 'locrianMajor'
          elseif current_item == 4 then
             naturalMinor()
+            current_scale = 'naturalMinor'
          elseif current_item == 5 then
             harmonicMinor()
+            current_scale = 'harmonicMinor'
          elseif current_item == 6 then
             dorian()
+            current_scale = 'dorian'
          elseif current_item == 7 then
             mixolydian()
+            current_scale = 'mixolydian'
          elseif current_item == 8 then
             phrygian()
+            current_scale = 'phrygian'
          elseif current_item == 9 then
             lydian()
+            current_scale = 'lydian'
          elseif current_item == 10 then
             locrian()
+            current_scale = 'locrian'
          elseif current_item == 11 then
             gypsy()
+            current_scale = 'gypsy'
          elseif current_item == 12 then
             wholetone()
+            current_scale = 'wholetone'
          elseif current_item == 13 then
             ahavaRaba()
+            current_scale = 'ahavaRaba'
          elseif current_item == 14 then
             majorPentatonic()
+            current_scale = 'majorPentatonic'
          elseif current_item == 15 then
             minorPentatonic()
+            current_scale = 'minorPentatonic'
          end
       end
 
